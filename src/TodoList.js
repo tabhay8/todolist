@@ -6,6 +6,11 @@ class TodoList extends Component {
     constructor(props) {
         super(props);
 
+        // Retrieve the items from local storage if available
+        const savedItems = localStorage.getItem("todoItems");
+        const items = savedItems ? JSON.parse(savedItems) : [];
+
+
         this.state = {
             items: []
         };
@@ -14,35 +19,43 @@ class TodoList extends Component {
         this.deleteItem = this.deleteItem.bind(this);
     }
     addItem(e) {
+        e.preventDefault();
+
         if (this._inputElement.value !== "") {
-            var newItem = {
+            const newItem = {
               text: this._inputElement.value,
               key: Date.now()
             };
          
             this.setState((prevState) => {
+                const updatedItems = prevState.items.concat(newItem);
+
+                localStorage.setItem("todoItems",JSON.stringify(updatedItems));
               return { 
-                items: prevState.items.concat(newItem) 
+                items: updatedItems,
               };
             });
            
             this._inputElement.value = "";
           }
            
-          console.log(this.state.items);
-             
-          e.preventDefault();
- 
     }
+
     deleteItem(key) {
-        var filteredItems = this.state.items.filter(function (item) {
-          return (item.key !== key);
-        });
+        const filteredItems = this.state.items.filter((item) => item.key !== key);
        
         this.setState({
           items: filteredItems
-        });
+        },
+        () => {
+            // Save the updated items array to local storage
+            localStorage.setItem("todoItems", JSON.stringify(filteredItems));
+          }
+        );
       }
+      
+
+
   render() {
     return (
       <div className="todoListMain">
