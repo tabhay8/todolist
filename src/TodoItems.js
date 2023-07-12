@@ -1,32 +1,25 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
+import TodoContext from "./TodoContext";
 import FlipMove from "react-flip-move";
- 
-class TodoItems extends Component {
-    constructor(props) {
-        super(props);
-     
-        this.createTasks = this.createTasks.bind(this);
-      }
-      delete(key) {
-        this.props.delete(key);
-      }
-  createTasks(item) {
-    return <li onClick={() => this.delete(item.key)}
-            key={item.key}>{item.text}</li>
-    }
- 
-  render() {
-    const todoEntries = this.props.entries;
-    const listItems = todoEntries.map(this.createTasks);
- 
-    return (
-      <ul className="theList">
-        <FlipMove duration={250} easing="ease-out">
-            {listItems}
-        </FlipMove>
-      </ul>
-    );
-  }
-};
- 
+
+function TodoItems() {
+  const { items, deleteItem } = useContext(TodoContext);
+
+  const handleDelete = (key) => {
+    deleteItem(key);
+  };
+
+  return (
+    <ul className="theList">
+      <FlipMove duration={250} easing="ease-out">
+        {items.map((item) => (
+          <li onClick={() => handleDelete(item.key)} key={item.key}>
+            {item.text}
+          </li>
+        ))}
+      </FlipMove>
+    </ul>
+  );
+}
+
 export default TodoItems;
