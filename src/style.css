@@ -14,5 +14,6 @@ body {
   #container {
     display: flex;
     justify-content: right;
-    padding: 120px 550px;
+    padding: 5% 25%;
   }
+  
