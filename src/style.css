@@ -1,9 +1,18 @@
 body {
-    padding: 50px;
+    padding: 0 px;
     background-color: antiquewhite;
     font-family: sans-serif;
+    background-image: url(../img/bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    
+
   }
   #container {
     display: flex;
-    justify-content: center;
+    justify-content: right;
+    padding: 120px 550px;
   }
